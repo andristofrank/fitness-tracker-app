@@ -24,12 +24,11 @@ import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/exercise.service';
 import { environment } from '../environments/environment';
 import { UIService } from './shared/ui.service';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
     TrainingComponent,
     CurrentTrainingComponent,
     NewTrainingComponent,
@@ -42,6 +41,7 @@ import { UIService } from './shared/ui.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AuthModule,
     AppRoutingModule,
     MaterialModule,
     FlexLayoutModule,
