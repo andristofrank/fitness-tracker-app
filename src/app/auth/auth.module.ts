@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -11,6 +12,7 @@ import { SignupComponent } from "./signup/signup.component";
       LoginComponent,
     ],
     imports: [
+      CommonModule,
       MaterialModule,
       FlexLayoutModule,
       FormsModule,
