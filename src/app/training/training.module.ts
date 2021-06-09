@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { MaterialModule } from "../material.module";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { CurrentTrainingComponent } from "./current-training/current-training.component";
@@ -9,8 +7,7 @@ import { StopTrainingComponent } from "./current-training/stop-training.componen
 import { NewTrainingComponent } from "./new-training/new-training.component";
 import { PastTrainingsComponent } from "./past-trainings/past-trainings.component";
 import { TrainingComponent } from "./training.component";
-import { FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -21,11 +18,8 @@ import { CommonModule } from "@angular/common";
       StopTrainingComponent
     ],
     imports: [
-      CommonModule,
-      MaterialModule,
-      FlexLayoutModule,
+      SharedModule,
       AngularFirestoreModule,
-      FormsModule
     ],
     entryComponents: [StopTrainingComponent]
   })
