@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { AuthData } from "./auth-data.model";
-import { User } from "./user.model";
-import { TrainingService } from '../training/exercise.service';
+import { AuthData } from './auth-data.model';
+import { TrainingService } from '../training/training.service';
 import { UIService } from '../shared/ui.service';
 
 @Injectable()
@@ -14,15 +13,15 @@ export class AuthService {
     private isAuthenticated = false;
 
     constructor(
-        private router: Router, 
-        private angularfireAuth: AngularFireAuth, 
+        private router: Router,
+        private angularfireAuth: AngularFireAuth,
         private trainingService: TrainingService,
-        private uiService: UIService, 
+        private uiService: UIService,
     ) {}
 
-    initAuthListener() {
+    initAuthListener(): void {
         this.angularfireAuth.authState.subscribe(user => {
-            if(user) {
+            if (user) {
                 this.isAuthenticated = true;
                 this.authChange.next(true);
                 this.router.navigate(['/training']);
@@ -35,10 +34,10 @@ export class AuthService {
         });
     }
 
-    registerUser(authData: AuthData) {
+    registerUser(authData: AuthData): void {
         this.uiService.loadingStateChanged.next(true);
         this.angularfireAuth.createUserWithEmailAndPassword(
-            authData.email, 
+            authData.email,
             authData.password
         ).then(result => {
             console.log(result);
@@ -47,10 +46,10 @@ export class AuthService {
         .catch(error => {
             this.uiService.loadingStateChanged.next(false);
             this.uiService.showSnackbar(error.message, null, 3000);
-        })
+        });
     }
 
-    login(authData: AuthData) {
+    login(authData: AuthData): void {
         this.uiService.loadingStateChanged.next(true);
         this.angularfireAuth
             .signInWithEmailAndPassword(authData.email, authData.password)
@@ -60,14 +59,14 @@ export class AuthService {
             .catch(error => {
                 this.uiService.loadingStateChanged.next(false);
                 this.uiService.showSnackbar(error.message, null, 3000);
-            })
+            });
     }
 
-    logout() {
+    logout(): void {
         this.angularfireAuth.signOut();
     }
 
-    isAuth() {
+    isAuth(): boolean {
         return this.isAuthenticated;
     }
 }

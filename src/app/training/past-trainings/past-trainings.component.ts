@@ -4,7 +4,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 
 import { Subscription } from 'rxjs';
 import { Exercise } from '../exercise.model';
-import { TrainingService } from '../exercise.service';
+import { TrainingService } from '../training.service';
 import { AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -23,24 +23,27 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   constructor(private trainingService: TrainingService) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.finishedExercisesSubscription = this.trainingService.finishedExercisesChanged.subscribe((exercises: Exercise[]) => {
       this.dataSource.data = exercises;
     });
     this.trainingService.fetchCompletedOrCancelledExercises();
   }
 
+  // tslint:disable-next-line:typedef
   doFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngOnDestroy() {
-    this.finishedExercisesSubscription.unsubscribe();
+  ngOnDestroy(): void {
+    if(this.finishedExercisesSubscription) {
+      this.finishedExercisesSubscription.unsubscribe();
+    }
   }
 
 }

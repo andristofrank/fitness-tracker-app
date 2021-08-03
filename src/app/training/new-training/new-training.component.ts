@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Exercise } from '../exercise.model';
-import { TrainingService } from '../exercise.service';
+import { TrainingService } from '../training.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,7 +14,6 @@ import { UIService } from 'src/app/shared/ui.service';
 })
 
 export class NewTrainingComponent implements OnInit, OnDestroy {
-  
   exercises: Exercise[];
   private exerciseSubscription: Subscription;
   isLoading = true;
@@ -30,16 +29,18 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     this.fetchExercises();
   }
 
-  fetchExercises(){
+  fetchExercises(): void {
     this.trainingService.fetchAvailableExercises();
   }
 
-  onStartTraining(form: NgForm) {
+  onStartTraining(form: NgForm): void {
     this.trainingService.startExercise(form.value.exercise);
   }
 
-  ngOnDestroy() {
-    this.exerciseSubscription.unsubscribe();
+  ngOnDestroy(): void {
+    if(this.exerciseSubscription) {
+      this.exerciseSubscription.unsubscribe();
+    }
   }
 
 }

@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loadingSubs: Subscription;
 
   constructor(
-    private authService: AuthService, 
-    private uiService: UIService,  
+    private authService: AuthService,
+    private uiService: UIService,
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.authService.login({
       email: this.loginForm.value.email,
       password: this.loginForm.value.password
@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loadingSubs.unsubscribe();
+    if (this.loadingSubs) {
+      this.loadingSubs.unsubscribe();
+    }
   }
 
 }

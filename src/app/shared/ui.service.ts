@@ -8,9 +8,10 @@ export class UIService {
 
     constructor(private snackBar: MatSnackBar) {}
 
+  // tslint:disable-next-line:typedef
     showSnackbar(message, action, duration) {
         this.snackBar.open(message, action, {
-            duration: duration
+            duration
         });
     }
 }
