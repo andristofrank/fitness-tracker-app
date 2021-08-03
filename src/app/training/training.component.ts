@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { TrainingService } from './exercise.service';
+import { TrainingService } from './training.service';
 
 @Component({
   selector: 'app-training',

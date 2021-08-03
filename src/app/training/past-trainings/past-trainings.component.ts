@@ -4,7 +4,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 
 import { Subscription } from 'rxjs';
 import { Exercise } from '../exercise.model';
-import { TrainingService } from '../exercise.service';
+import { TrainingService } from '../training.service';
 import { AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
