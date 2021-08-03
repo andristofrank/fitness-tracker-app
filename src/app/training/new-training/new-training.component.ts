@@ -14,7 +14,6 @@ import { UIService } from 'src/app/shared/ui.service';
 })
 
 export class NewTrainingComponent implements OnInit, OnDestroy {
-  
   exercises: Exercise[];
   private exerciseSubscription: Subscription;
   isLoading = true;
@@ -30,15 +29,15 @@ export class NewTrainingComponent implements OnInit, OnDestroy {
     this.fetchExercises();
   }
 
-  fetchExercises(){
+  fetchExercises(): void {
     this.trainingService.fetchAvailableExercises();
   }
 
-  onStartTraining(form: NgForm) {
+  onStartTraining(form: NgForm): void {
     this.trainingService.startExercise(form.value.exercise);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if(this.exerciseSubscription) {
       this.exerciseSubscription.unsubscribe();
     }

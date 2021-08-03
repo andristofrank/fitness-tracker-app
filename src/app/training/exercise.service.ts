@@ -20,20 +20,21 @@ export class TrainingService {
 
     constructor(private db: AngularFirestore, private uiService: UIService) {}
 
+  // tslint:disable-next-line:typedef
     fetchAvailableExercises(){
         this.firebaseSubscriptions.push(this.db
             .collection('availableExercises')
             .snapshotChanges()
             .pipe(map(docArrayData => {
                 return docArrayData.map(doc => {
-                    return <Exercise> {
+                    return {
                         id: doc.payload.doc.id,
                         ...doc.payload.doc.data() as Exercise
-                    };
+                    } as Exercise;
                 });
             }))
             .subscribe((exercises: Exercise[]) => {
-                console.log(exercises);             
+                console.log(exercises);
                 this.availableExercises = exercises;
                 this.exercisesChanged.next([...this.availableExercises]);
             }, error => {
@@ -43,6 +44,7 @@ export class TrainingService {
             }));
     }
 
+  // tslint:disable-next-line:typedef
     startExercise(selectedId: string) {
         this.activeExercise = this.availableExercises.find(
             ex => ex.id === selectedId
@@ -50,32 +52,35 @@ export class TrainingService {
         this.exerciseChanged.next({ ...this.activeExercise });
     }
 
+  // tslint:disable-next-line:typedef
     completeExercise() {
-        this.addDataToDatabase({ 
-            ...this.activeExercise, 
-            date: new Date(), 
-            state: 'completed' 
+        this.addDataToDatabase({
+            ...this.activeExercise,
+            date: new Date(),
+            state: 'completed'
         });
         this.activeExercise = null;
         this.exerciseChanged.next(null);
     }
 
+  // tslint:disable-next-line:typedef
     cancelExercise(progress: number) {
-        this.addDataToDatabase({ 
+        this.addDataToDatabase({
             ...this.activeExercise,
             duration: this.activeExercise.duration * (progress / 100),
             calories: this.activeExercise.calories * (progress / 100),
-            date: new Date(), 
-            state: 'cancelled' 
+            date: new Date(),
+            state: 'cancelled'
         });
         this.activeExercise = null;
         this.exerciseChanged.next(null);
     }
 
-    getActiveExercise() {
+    getActiveExercise(): Exercise {
         return {...this.activeExercise};
     }
 
+  // tslint:disable-next-line:typedef
     fetchCompletedOrCancelledExercises() {
         this.firebaseSubscriptions.push(this.db
             .collection('finishedExercises')
@@ -83,12 +88,13 @@ export class TrainingService {
             .subscribe((exercises: Exercise[]) => {
                 this.finishedExercisesChanged.next(exercises);
         })
-    )};
+    ); }
 
-    cancelSubscriptions() {
+    cancelSubscriptions(): void {
         this.firebaseSubscriptions.forEach(sub => sub.unsubscribe());
     }
 
+  // tslint:disable-next-line:typedef
     private addDataToDatabase(exercise: Exercise) {
         this.db.collection('finishedExercises').add(exercise);
     }

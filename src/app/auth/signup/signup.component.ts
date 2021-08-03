@@ -28,15 +28,15 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     this.authService.registerUser({
       email: form.value.email,
       password: form.value.password
     });
   }
 
-  ngOnDestroy() {
-    if(this.loadingSubs) {
+  ngOnDestroy(): void {
+    if (this.loadingSubs) {
       this.loadingSubs.unsubscribe();
     }
   }
